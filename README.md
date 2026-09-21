@@ -2,7 +2,9 @@
 
 Un jardín de flores amarillas, hecho con amor para una persona especial.
 
-Cada toque hace crecer un girasol: primero el tallo, después el centro y luego ocho pétalos. Las flores se mecen con la brisa y permanecen juntas en el mismo paisaje.
+Cada toque hace crecer un girasol: primero el tallo, después el centro y luego ocho pétalos. Al completar cada girasol, este se acomoda en una letra hasta formar **Angiee** con 89 flores. El nombre permanece completo dentro del mismo paisaje, tanto en móvil como en PC, y las flores siguen meciéndose con la brisa.
+
+Puedes crear cada parte a mano o usar **Deja que florezca** para completar el nombre automáticamente. El crecimiento puede pausarse, y se detiene al terminar la dedicatoria. El botón de reinicio permite comenzar de nuevo.
 
 ## Ver el jardín
 
