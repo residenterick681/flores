@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf7ef">
+  <meta name="description" content="En el día de las flores amarillas, este jardín y cada una de sus flores son para ti, con amor.">
+  <title>Mis flores amarillas son para ti ♡</title>
+  <style>
+    :root { color-scheme: light; --paper:#faf7ef; --ink:#394638; --muted:#858878; --gold:#b78229; --line:#e6e3d6; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:"Segoe UI",Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+    button { font:inherit; color:inherit; }
+    button, [role="button"] { -webkit-tap-highlight-color:transparent; }
+    button:focus-visible, [role="button"]:focus-visible { outline:3px solid #b98429; outline-offset:5px; }
+    .page { width:min(1400px,100%); margin:auto; padding:27px 48px 20px; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .dedication { display:flex; align-items:center; gap:10px; font-family:Georgia,serif; font-size:21px; letter-spacing:-.5px; font-style:italic; }
+    .dedication svg { width:31px; height:31px; color:#b78a37; }
+    .header-right { display:flex; align-items:center; }
+    .breeze { display:grid; place-items:center; width:34px; height:34px; border:1px solid #dfdfd1; border-radius:50%; background:transparent; cursor:pointer; transition:background .2s; }
+    .breeze:hover { background:#eeeee2; }
+    .breeze svg { width:17px; height:17px; }
+    .intro { text-align:center; padding:30px 0 27px; }
+    .eyebrow { display:flex; justify-content:center; align-items:center; gap:10px; font-size:10px; letter-spacing:2.8px; text-transform:uppercase; color:#8b936f; }
+    .eyebrow::before, .eyebrow::after { content:""; width:22px; height:1px; background:#b8bea4; }
+    h1 { margin:16px 0 17px; font-family:Georgia,"Times New Roman",serif; font-size:clamp(34px,4vw,55px); line-height:1.16; font-weight:400; letter-spacing:-1.7px; }
+    h1 em { color:var(--gold); font-weight:400; }
+    .intro p { max-width:560px; margin:0 auto; font-size:13px; color:#7d806e; line-height:1.9; }
+    .intro .letter-opening { display:block; color:#72795f; font-family:Georgia,serif; font-size:16px; font-style:italic; margin-bottom:5px; }
+    .garden-shell { position:relative; height:clamp(360px,49vh,560px); border-radius:22px; isolation:isolate; }
+    .landscape { position:absolute; inset:0; overflow:hidden; border-radius:inherit; background:linear-gradient(180deg,#efe9dc 0%,#f6ead0 45%,#f4e6bd 71%,#d0d3a9 100%); }
+    .landscape::after { content:""; position:absolute; inset:0; opacity:.18; pointer-events:none; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23808080' opacity='.28' filter='url(%23n)' d='M0 0h150v150H0z'/%3E%3C/svg%3E"); mix-blend-mode:multiply; }
+    .sun { position:absolute; width:clamp(75px,8vw,110px); aspect-ratio:1; border-radius:50%; background:#fff4c8; left:74%; top:16%; box-shadow:0 0 70px 34px #fff5cf80,0 0 130px 75px #ffefc02b; }
+    .cloud { position:absolute; width:220px; height:40px; border-radius:50%; background:#fffaf24d; filter:blur(12px); animation:cloud-drift 22s ease-in-out infinite alternate; }
+    .cloud.one { left:12%; top:15%; }
+    .cloud.two { left:52%; top:29%; width:150px; opacity:.5; animation-delay:-12s; }
+    .hills { position:absolute; bottom:0; width:100%; height:49%; }
+    .birds { position:absolute; left:26%; top:23%; width:78px; opacity:.38; }
+    .corner-botanical { position:absolute; bottom:-5px; width:180px; height:200px; opacity:.55; transform-origin:bottom; animation:grass-sway 6s ease-in-out infinite alternate; }
+    .corner-botanical.left { left:-24px; }
+    .corner-botanical.right { right:-35px; transform:scaleX(-1); animation-name:grass-sway-right; opacity:.4; }
+    .garden { position:absolute; inset:0; border-radius:inherit; overflow:clip; cursor:pointer; touch-action:pan-y pinch-zoom; user-select:none; }
+    .plot { position:relative; width:100%; height:100%; pointer-events:none; }
+    .plant { position:absolute; bottom:6.5%; transform:translateX(-50%); pointer-events:none; }
+    .plant-shadow { position:absolute; bottom:-1%; left:26%; width:52%; height:12px; border-radius:50%; background:#465b4236; filter:blur(5px); animation:shadow-arrive 1s ease-out both; }
+    .sway { height:100%; transform-origin:50% 97%; animation:sway var(--sway-duration,5s) ease-in-out infinite alternate; animation-delay:var(--sway-delay,0s); will-change:transform; }
+    .flower-svg { display:block; width:100%; height:100%; overflow:visible; }
+    .stem-line { stroke-dasharray:1; stroke-dashoffset:1; animation:stem-grow .85s cubic-bezier(.22,.61,.36,1) forwards; }
+    .stem-leaf { transform-box:fill-box; transform-origin:bottom right; animation:leaf-grow .75s .24s cubic-bezier(.2,.8,.3,1.2) both; }
+    .stem-leaf.right { transform-origin:bottom left; animation-delay:.38s; }
+    .center-grow, .petal-grow { transform-origin:140px 119px; animation:bloom .62s cubic-bezier(.2,.8,.2,1.25) both; }
+    .petal-grow { animation-duration:.7s; }
+    .flower-head { filter:drop-shadow(0 4px 3px #956b301b); }
+    .scene-topline { position:absolute; top:24px; left:26px; right:20px; display:flex; justify-content:space-between; align-items:center; pointer-events:none; z-index:2; }
+    .scene-caption { font-family:Georgia,serif; font-size:12px; font-style:italic; color:#727d61; }
+    .reset { width:34px; height:34px; border:1px solid #b2b69e60; border-radius:50%; background:#fffaf53d; display:grid; place-items:center; cursor:pointer; pointer-events:auto; transition:background .2s,opacity .2s; }
+    .reset:hover { background:#fffaf5b0; }
+    .reset:disabled { opacity:.35; cursor:default; }
+    .reset svg { width:15px; height:15px; }
+    .invitation { position:absolute; top:36%; left:50%; transform:translateX(-50%); text-align:center; width:max-content; max-width:90%; pointer-events:none; transition:opacity .35s,translate .35s; }
+    .invitation.hidden { opacity:0; translate:0 10px; }
+    .tap-orbit { display:grid; place-items:center; position:relative; width:55px; height:55px; margin:0 auto 18px; border:1px solid #b7985060; border-radius:50%; color:#aa8138; background:#fff9e44a; }
+    .tap-orbit::after { content:""; position:absolute; inset:-1px; border:1px solid #b7985060; border-radius:50%; animation:ripple 3s ease-out infinite; }
+    .tap-orbit svg { width:25px; height:25px; }
+    .invitation h2 { margin:0 0 8px; color:#71795b; font-family:Georgia,serif; font-weight:400; font-size:28px; letter-spacing:-.6px; }
+    .invitation p { font-size:11px; color:#93977a; margin:0; letter-spacing:.3px; }
+    .scene-bottomline { position:absolute; bottom:20px; left:26px; right:26px; display:flex; align-items:center; justify-content:space-between; gap:15px; pointer-events:none; font-family:Georgia,serif; font-style:italic; font-size:12px; color:#657453; }
+    .scene-bottomline svg { width:14px; height:14px; vertical-align:-3px; margin-right:5px; }
+    .firefly { position:absolute; width:4px; height:4px; border-radius:50%; background:#fff7ca; box-shadow:0 0 8px #fff5c2; pointer-events:none; animation:float 9s ease-in-out infinite; }
+    .spark { position:absolute; width:5px; height:5px; border-radius:50%; background:#efc764; pointer-events:none; z-index:4; animation:spark .8s ease-out forwards; }
+    .love-note { text-align:center; padding:22px 12px 0; }
+    .step-title { font-family:Georgia,serif; font-size:19px; font-style:italic; color:#8c763f; line-height:1.5; }
+    .step-subtitle { font-size:11px; color:var(--muted); line-height:1.7; margin-top:6px; }
+    footer { display:flex; justify-content:center; padding-top:22px; color:#92927e; }
+    .footer-note { font-family:Georgia,serif; font-style:italic; font-size:13px; }
+    .heart { color:#c0a367; margin-right:5px; }
+    .mobile-copy { display:none; }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    .is-paused .sway, .is-paused .cloud, .is-paused .corner-botanical, .is-paused .firefly, .is-paused .tap-orbit::after { animation-play-state:paused; }
+    @keyframes sway { from { transform:rotate(-2deg); } to { transform:rotate(2.2deg); } }
+    @keyframes stem-grow { to { stroke-dashoffset:0; } }
+    @keyframes leaf-grow { from { transform:scale(.05); opacity:0; } to { transform:scale(1); opacity:1; } }
+    @keyframes bloom { from { transform:scale(.03); opacity:0; } to { transform:scale(1); opacity:1; } }
+    @keyframes shadow-arrive { from { opacity:0; scale:.3; } to { opacity:1; scale:1; } }
+    @keyframes cloud-drift { to { translate:50px 0; } }
+    @keyframes grass-sway { from { rotate:-2deg; } to { rotate:2deg; } }
+    @keyframes grass-sway-right { from { rotate:2deg; } to { rotate:-2deg; } }
+    @keyframes ripple { 0% { scale:1; opacity:.7; } 90%,100% { scale:1.55; opacity:0; } }
+    @keyframes float { 0%,100% { translate:0 0; opacity:.1; } 45% { translate:14px -28px; opacity:.85; } 75% { translate:-8px -15px; opacity:.25; } }
+    @keyframes spark { from { opacity:1; transform:translate(0,0) scale(1); } to { opacity:0; transform:translate(var(--dx),var(--dy)) scale(.2); } }
+    @media (pointer:coarse) { .desktop-copy { display:none; } .mobile-copy { display:inline; } }
+    @media (min-width:1600px) { .intro { padding-top:58px; padding-bottom:40px; } }
+    @media (max-width:700px) {
+      .desktop-copy { display:none; }
+      .mobile-copy { display:inline; }
+      .page { padding:22px 20px 20px; }
+      .dedication { font-size:20px; gap:8px; }
+      .dedication svg { width:27px; height:27px; }
+      .intro { padding:29px 0 25px; }
+      h1 { max-width:360px; margin:15px auto 16px; font-size:35px; letter-spacing:-1px; }
+      .intro p { max-width:330px; margin:auto; font-size:12px; }
+      .intro .letter-opening { font-size:15px; max-width:290px; margin:0 auto 7px; }
+      .eyebrow { font-size:8px; letter-spacing:1.7px; gap:8px; }
+      .eyebrow::before, .eyebrow::after { width:12px; }
+      .garden-shell { height:clamp(355px,49svh,470px); border-radius:17px; }
+      .scene-topline { left:18px; top:15px; right:14px; }
+      .scene-caption { font-size:11px; }
+      .sun { left:72%; top:19%; width:64px; }
+      .birds { left:16%; top:23%; width:54px; }
+      .corner-botanical { width:115px; height:150px; }
+      .scene-bottomline { left:17px; right:17px; bottom:14px; font-size:11px; }
+      .invitation h2 { font-size:25px; }
+      .invitation p { font-size:10px; }
+      .love-note { padding-top:20px; }
+      .step-title { font-size:17px; }
+      .step-subtitle { font-size:10px; }
+      footer { padding-top:20px; }
+    }
+    @media (max-width:360px) { .page { padding-inline:14px; } h1 { font-size:30px; } .dedication { font-size:18px; } }
+    @media (prefers-reduced-motion:reduce) {
+      *, *::before, *::after { scroll-behavior:auto !important; transition:none !important; }
+      .stem-line, .stem-leaf, .center-grow, .petal-grow, .plant-shadow { animation-duration:.01ms !important; animation-delay:0s !important; }
+      .spark { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="dedication">
+        <svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="20" r="7" stroke="currentColor" stroke-width="1.5"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M20 3v7m0 20v7M3 20h7m20 0h7M8 8l5 5m14 14 5 5M8 32l5-5m14-14 5-5"/><path d="m13.5 4.5 2.2 5.3m8.6 20.4 2.2 5.3M4.5 26.5l5.3-2.2m20.4-8.6 5.3-2.2M4.5 13.5l5.3 2.2m20.4 8.6 5.3 2.2M13.5 35.5l2.2-5.3m8.6-20.4 2.2-5.3" opacity=".6"/></g></svg>
+        <span>Para ti, con amor</span>
+      </div>
+      <div class="header-right">
+        <button class="breeze" id="breeze" type="button" aria-pressed="true" aria-label="Brisa: pausar el movimiento" title="Pausar la brisa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M3 8h12a3 3 0 1 0-3-3M3 12h16a2.5 2.5 0 1 1-2.5 2.5M3 16h6a2 2 0 1 1-2 2"/></svg>
+          <span class="sr-only" id="breeze-label">Brisa activa</span>
+        </button>
+      </div>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="title">
+        <div class="eyebrow">Día de las flores amarillas</div>
+        <h1 id="title">Mis flores amarillas<br><em>siempre serán para ti.</em></h1>
+        <p><span class="letter-opening">Si los girasoles buscan el sol, yo te buscaría a ti.</span>Hoy te regalo este pequeño jardín, para recordarte<br class="desktop-copy"> lo bonito que es tenerte en mi vida.</p>
+      </section>
+      <section class="garden-shell" aria-label="Tu jardín de girasoles">
+        <div class="landscape" aria-hidden="true">
+          <div class="sun"></div><div class="cloud one"></div><div class="cloud two"></div>
+          <svg class="birds" viewBox="0 0 90 35" fill="none" stroke="#838b70" stroke-width="1.4" stroke-linecap="round"><path d="M3 10q8-5 15 3 7-8 15-3M53 24q6-4 11 2 5-6 11-2M60 3q4-3 8 1 4-4 8-1"/></svg>
+          <svg class="hills" viewBox="0 0 1400 280" preserveAspectRatio="none"><path d="M0 98Q180 4 400 103T830 77T1400 94V280H0Z" fill="#b9c09d" opacity=".35"/><path d="M0 167Q170 96 425 159T910 132T1400 147V280H0Z" fill="#a3b28b" opacity=".35"/><path d="M0 188Q240 238 500 201T950 194T1400 208V280H0Z" fill="#93a57c" opacity=".3"/><path d="M0 252Q400 226 790 255T1400 243V280H0Z" fill="#829b70" opacity=".14"/></svg>
+          <svg class="corner-botanical left" viewBox="0 0 180 200" fill="none" stroke="#84996c" stroke-width="1.4"><path d="M68 206Q93 118 61 47M88 205Q110 115 137 89M44 206Q52 160 25 131M104 205Q125 166 151 162"/><g fill="#8b9e72" stroke="none"><path d="M73 101Q37 96 41 72Q69 73 73 101M73 123Q101 98 98 78Q71 93 73 123M75 147Q44 147 40 123Q67 124 75 147M70 166Q99 153 100 130Q73 140 70 166M110 142Q107 108 124 99Q137 119 110 142M120 119Q140 123 150 104Q131 99 120 119M49 175Q22 174 15 151Q36 150 49 175M129 178Q148 182 160 165Q143 157 129 178"/></g></svg>
+          <svg class="corner-botanical right" viewBox="0 0 180 200" fill="none" stroke="#84996c" stroke-width="1.4"><path d="M68 206Q93 118 61 47M88 205Q110 115 137 89M44 206Q52 160 25 131"/><g fill="#8b9e72" stroke="none"><path d="M73 101Q37 96 41 72Q69 73 73 101M73 123Q101 98 98 78Q71 93 73 123M75 147Q44 147 40 123Q67 124 75 147M70 166Q99 153 100 130Q73 140 70 166M110 142Q107 108 124 99Q137 119 110 142M120 119Q140 123 150 104Q131 99 120 119M49 175Q22 174 15 151Q36 150 49 175"/></g></svg>
+          <span class="firefly" style="left:18%;top:60%;animation-delay:-2s"></span><span class="firefly" style="left:39%;top:74%;animation-delay:-6s"></span><span class="firefly" style="left:68%;top:53%;animation-delay:-4s"></span><span class="firefly" style="left:84%;top:78%;animation-delay:-1s"></span>
+        </div>
+        <div class="garden" id="garden" role="button" tabindex="0" aria-label="Plantar un girasol: haz clic para crear el tallo" aria-describedby="garden-help">
+          <div class="plot" id="plot" aria-hidden="true"></div>
+        </div>
+        <div class="scene-topline"><span class="scene-caption">Donde estés tú, florece todo.</span><button class="reset" id="reset" type="button" aria-label="Reiniciar el jardín" title="Reiniciar el jardín" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg></button></div>
+        <div class="invitation" id="invitation" aria-hidden="true"><div class="tap-orbit"><svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V7a2 2 0 0 1 4 0v7l1-1a2 2 0 0 1 3 1 2 2 0 0 1 3 2v4c0 4-3 6-6 6h-1c-3 0-4-2-6-4l-4-5a2 2 0 0 1 3-2l3 3"/><path d="M7 8a7 7 0 0 1 13-3" opacity=".5"/></svg></div><h2><span class="desktop-copy">Dale clic</span><span class="mobile-copy">Presiona la pantalla</span></h2><p>Tengo flores amarillas para ti. ♡</p></div>
+        <div class="scene-bottomline" aria-hidden="true"><span id="scene-hint"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10 17V8m0 4C4 12 3 7 4 5c5 0 7 3 6 7Zm0-3c0-5 3-7 6-7 1 4-1 7-6 7Z"/></svg>Este jardín es solo para ti.</span></div>
+      </section>
+      <div class="love-note">
+        <div class="step-title" id="step-title">No quería que te quedaras sin tus flores amarillas.</div>
+        <div class="step-subtitle" id="step-subtitle">Toca el jardín; cada flor que nazca es para ti.</div>
+      </div>
+      <p class="sr-only" id="garden-help">Haz clic o toca el jardín. Primer toque: tallo. Segundo: centro café. Los ocho siguientes añaden un pétalo cada uno. Al terminar, el siguiente toque inicia otro girasol. También puedes usar Enter o la barra espaciadora con el jardín seleccionado.</p>
+      <p class="sr-only" id="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
+    </main>
+    <footer><span class="footer-note">Con amor, de mí para ti, te amo mucho mi Angiee. <span class="heart">♡</span></span></footer>
+  </div>
+  <script>
+    (() => {
+      'use strict';
+      const $ = id => document.getElementById(id);
+      const garden = $('garden'), plot = $('plot');
+      const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+      const flowers = [];
+      let active = null, completed = 0, serial = 0, motionOn = !motionPreference.matches;
+      let pointerStart = null, dragged = false;
+      const ns = 'http://www.w3.org/2000/svg';
+      const svgElement = (tag, attrs = {}) => {
+        const element = document.createElementNS(ns, tag);
+        Object.entries(attrs).forEach(([key, value]) => element.setAttribute(key, value));
+        return element;
+      };
+      function setMotion(enabled) {
+        motionOn = enabled;
+        document.body.classList.toggle('is-paused', !enabled);
+        $('breeze').setAttribute('aria-pressed', String(enabled));
+        $('breeze').setAttribute('aria-label', enabled ? 'Brisa: pausar el movimiento' : 'Brisa: activar el movimiento');
+        $('breeze-label').textContent = enabled ? 'Brisa activa' : 'Brisa en pausa';
+        $('breeze').title = enabled ? 'Pausar la brisa' : 'Activar la brisa';
+      }
+      setMotion(motionOn);
+      $('breeze').addEventListener('click', () => setMotion(!motionOn));
+      motionPreference.addEventListener('change', event => setMotion(!event.matches));
+
+      function layoutFlowers() {
+        const width = garden.clientWidth, height = garden.clientHeight;
+        if (!width || !height) return;
+        const initialColumns = width < 600 ? 3 : width < 950 ? 5 : 7;
+        // Fill from the center to the sides, then add rows in the foreground.
+        // A denser garden uses smaller blooms; every plant stays in this frame.
+        const columns = flowers.length <= initialColumns * 3
+          ? initialColumns
+          : Math.max(initialColumns, Math.ceil(Math.sqrt(flowers.length * width / (height * .85))));
+        const rows = Math.max(1, Math.ceil(flowers.length / columns));
+        const margin = Math.min(width * .24, height * .165 + 12);
+        const horizontalGap = (width - margin * 2) / (columns - 1);
+        const diameter = Math.min(height * .35, horizontalGap * .96, height * .42 / Math.max(1, rows - .25));
+        const columnOrder = Array.from({ length:columns }, (_, index) => index)
+          .sort((a, b) => Math.abs(a - (columns - 1) / 2) - Math.abs(b - (columns - 1) / 2) || a - b);
+
+        flowers.forEach((flower, index) => {
+          const row = Math.floor(index / columns);
+          const column = columnOrder[index % columns];
+          const depth = rows === 1 ? 0 : row / (rows - 1);
+          const stagger = row % 2 ? horizontalGap * .18 : 0;
+          const x = Math.max(margin, Math.min(width - margin, margin + column * horizontalGap + stagger));
+          const bottom = height * (.095 - depth * .035);
+          const variation = [0, .045, .025, .06, .04, .01, .03][index % 7] / rows;
+          const headY = height * (.28 + depth * .38 + variation);
+          // Keep stems rooted in the ground while spacing flower heads by depth.
+          const plantHeight = (height - bottom - headY) / (1 - 119 / 430);
+          const bloomScale = diameter / (plantHeight * 192 / 430);
+          flower.x = x;
+          flower.element.style.left = x + 'px';
+          flower.element.style.bottom = bottom + 'px';
+          flower.element.style.height = plantHeight + 'px';
+          flower.element.style.width = plantHeight * 280 / 430 + 'px';
+          flower.element.style.zIndex = String(row * columns + column + 1);
+          flower.element.querySelector('.flower-head').setAttribute('transform',
+            'translate(140 119) scale(' + bloomScale.toFixed(4) + ') translate(-140 -119)');
+        });
+      }
+
+      function createFlower() {
+        const id = 'flower-' + (++serial);
+        const element = document.createElement('div'); element.className = 'plant';
+        element.style.setProperty('--sway-duration', (4.3 + (serial % 5) * .6) + 's');
+        element.style.setProperty('--sway-delay', (-serial * 1.17) + 's');
+        element.innerHTML = `<div class="plant-shadow"></div><div class="sway"><svg class="flower-svg" viewBox="0 0 280 430" aria-hidden="true">
+          <defs>
+            <linearGradient id="${id}-stem" x1="0" x2="1"><stop stop-color="#58794d"/><stop offset=".55" stop-color="#8b9e57"/><stop offset="1" stop-color="#64834d"/></linearGradient>
+            <linearGradient id="${id}-leaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#97ad67"/><stop offset="1" stop-color="#50774e"/></linearGradient>
+            <linearGradient id="${id}-petal" x1="0" y1="0" x2=".2" y2="1"><stop stop-color="#ffe39a"/><stop offset=".35" stop-color="#f5c74f"/><stop offset=".77" stop-color="#ecb22f"/><stop offset="1" stop-color="#d68d22"/></linearGradient>
+            <radialGradient id="${id}-center" cx=".4" cy=".35" r=".7"><stop stop-color="#856039"/><stop offset=".65" stop-color="#6b482e"/><stop offset="1" stop-color="#4c3525"/></radialGradient>
+          </defs>
+          <g class="stem"><path class="stem-line" d="M140 416C124 339 160 239 140 121" pathLength="1" stroke="url(#${id}-stem)" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <g class="stem-leaf"><path d="M139 296C109 302 72 276 73 238C111 239 141 261 139 296Z" fill="url(#${id}-leaf)"/><path d="M138 296Q111 266 80 246M110 268l-3-17M111 268l-20 1M124 282l-3-20" stroke="#c2cc8970" stroke-width="1.2" fill="none"/></g>
+            <g class="stem-leaf right"><path d="M143 255C139 218 173 196 197 199C199 228 178 255 143 255Z" fill="url(#${id}-leaf)"/><path d="M144 254Q165 223 190 205M162 232l2-18M162 232l19-3" stroke="#c2cc8970" stroke-width="1.2" fill="none"/></g>
+          </g><g class="flower-head"><g class="petals"></g><g class="disk"></g></g>
+        </svg></div>`;
+        plot.append(element);
+        const flower = { id, element, step:1, petals:element.querySelector('.petals'), disk:element.querySelector('.disk'), x:0 };
+        flowers.push(flower); active = flower;
+        layoutFlowers();
+        return flower;
+      }
+
+      function addCenter(flower) {
+        const group = svgElement('g', { class:'center-grow' });
+        group.append(svgElement('circle', { cx:140, cy:119, r:34, fill:'#c18c37' }));
+        group.append(svgElement('circle', { cx:140, cy:119, r:31, fill:`url(#${flower.id}-center)` }));
+        // A golden-angle spiral makes the tiny seeds feel natural at any size.
+        for (let i = 0; i < 145; i++) {
+          const angle = i * 2.399963229728653;
+          const radius = 2.32 * Math.sqrt(i);
+          group.append(svgElement('ellipse', { cx:(140 + Math.cos(angle) * radius).toFixed(2), cy:(119 + Math.sin(angle) * radius).toFixed(2), rx:1.05, ry:1.45, fill:i % 3 ? '#c3995a' : '#382c21', opacity:i % 3 ? '.62' : '.55', transform:`rotate(${(angle * 180 / Math.PI + 90).toFixed(2)} ${(140 + Math.cos(angle) * radius).toFixed(2)} ${(119 + Math.sin(angle) * radius).toFixed(2)})` }));
+        }
+        group.append(svgElement('circle', { cx:140, cy:119, r:29.8, fill:'none', stroke:'#e2af5955', 'stroke-width':1 }));
+        flower.disk.append(group);
+      }
+
+      function addPetal(flower, index) {
+        const rotation = svgElement('g', { transform:`rotate(${index * 45} 140 119)`, class:'petal' });
+        const grow = svgElement('g', { class:'petal-grow' });
+        grow.append(svgElement('path', { d:'M140 120C120 108 101 89 110 64C115 48 130 32 140 23C149 34 167 49 171 66C178 90 159 110 140 120Z', fill:`url(#${flower.id}-petal)`, stroke:'#dbaa3d', 'stroke-width':'.65' }));
+        grow.append(svgElement('path', { d:'M140 110Q137 70 140 37', fill:'none', stroke:'#fff0b8', 'stroke-width':1.5, opacity:'.45' }));
+        grow.append(svgElement('path', { d:'M134 103Q121 80 127 57M147 100Q158 75 151 56', fill:'none', stroke:'#b7822726', 'stroke-width':'.8' }));
+        rotation.append(grow); flower.petals.append(rotation);
+      }
+
+      const petalMessages = [
+        'Me gusta la vida un poquito más cuando estás tú.',
+        'Tienes esa forma tan tuya de iluminar mis días.',
+        'Si pudiera regalarte un paisaje, se parecería a este.',
+        'Qué bonito coincidir contigo.',
+        'Hay mil flores, pero mi persona favorita eres tú.',
+        'Ojalá estas flores te abracen un poquito por mí.',
+        'Yo seguiría eligiéndote, pétalo a pétalo.'
+      ];
+      const bloomMessages = [
+        'Mis flores amarillas siempre serán para ti.',
+        'Que nunca te falten flores, ni motivos para sonreír.',
+        'Si cada vez que pienso en ti naciera una flor…',
+        '…no habría jardín lo bastante grande.',
+        'Mi lugar favorito siempre será cerquita de ti.',
+        'Hoy son girasoles. Siempre, todo mi cariño.'
+      ];
+
+      function updateInterface() {
+        const step = active ? active.step : 0;
+        const petals = Math.max(0, step - 2);
+        const title = $('step-title'), subtitle = $('step-subtitle');
+        let next;
+        if (!step) {
+          title.textContent = 'No quería que te quedaras sin tus flores amarillas.';
+          subtitle.textContent = 'Toca el jardín; cada flor que nazca es para ti.';
+          next = 'Plantar un girasol: haz clic para crear el tallo';
+        } else if (step === 1) {
+          title.textContent = 'Todo lo bonito empieza con un poquito de cariño.';
+          subtitle.textContent = 'Un toque más, y este girasol tendrá su corazón.';
+          next = 'Añadir el centro café al girasol';
+        } else if (step === 2) {
+          title.textContent = 'Este también late un poquito por ti.';
+          subtitle.textContent = 'Sigue tocando; te espera un pétalo en cada toque.';
+          next = 'Añadir el pétalo 1 de 8';
+        } else if (step < 10) {
+          title.textContent = petalMessages[petals - 1];
+          subtitle.textContent = 'Un pétalo más, un poquito más de amor.';
+          next = 'Añadir el pétalo ' + (petals + 1) + ' de 8';
+        } else {
+          title.textContent = bloomMessages[(completed - 1) % bloomMessages.length];
+          subtitle.textContent = 'Este ya es tuyo. Toca otra vez y te regalo otro.';
+          next = 'Girasol completo. Crear el tallo de un nuevo girasol';
+        }
+        garden.setAttribute('aria-label', next);
+        $('reset').disabled = !flowers.length;
+        $('invitation').classList.toggle('hidden', !!flowers.length);
+        $('scene-hint').textContent = step ? 'Tú haces que todo florezca. ♡' : 'Este jardín es solo para ti.';
+        $('announcement').textContent = title.textContent + ' ' + next + '. ' + completed
+          + (completed === 1 ? ' girasol completo.' : ' girasoles completos.');
+      }
+
+      function sparkle(event) {
+        if (!motionOn || motionPreference.matches) return;
+        const rect = garden.getBoundingClientRect();
+        const x = event && event.detail ? event.clientX - rect.left : Math.min(rect.width - 35, Math.max(35, active.x));
+        const y = event && event.detail ? event.clientY - rect.top : rect.height * .35;
+        for (let i = 0; i < 6; i++) {
+          const spark = document.createElement('span'); spark.className = 'spark';
+          spark.style.left = x + 'px'; spark.style.top = y + 'px';
+          const angle = i * Math.PI / 3;
+          spark.style.setProperty('--dx', Math.cos(angle) * 30 + 'px'); spark.style.setProperty('--dy', Math.sin(angle) * 30 - 13 + 'px');
+          spark.addEventListener('animationend', () => spark.remove(), { once:true });
+          $('invitation').parentElement.append(spark);
+        }
+      }
+
+      function grow(event) {
+        if (!active || active.step === 10) createFlower();
+        else {
+          active.step++;
+          if (active.step === 2) addCenter(active);
+          else addPetal(active, active.step - 3);
+          if (active.step === 10) completed++;
+        }
+        sparkle(event); updateInterface();
+      }
+      garden.addEventListener('pointerdown', event => { pointerStart = { x:event.clientX, y:event.clientY }; dragged = false; });
+      garden.addEventListener('pointermove', event => { if (pointerStart && Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y) > 12) dragged = true; });
+      garden.addEventListener('pointerup', () => { pointerStart = null; });
+      garden.addEventListener('pointercancel', () => { pointerStart = null; dragged = true; });
+      garden.addEventListener('click', event => { if (!dragged) grow(event); dragged = false; });
+      garden.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); if (!event.repeat) grow(); }
+      });
+      $('reset').addEventListener('click', () => {
+        plot.replaceChildren(); flowers.length = 0; active = null; completed = 0;
+        document.querySelectorAll('.spark').forEach(spark => spark.remove());
+        updateInterface(); garden.focus({ preventScroll:true });
+      });
+      new ResizeObserver(layoutFlowers).observe(garden);
+      document.addEventListener('visibilitychange', () => document.body.classList.toggle('is-paused', document.hidden || !motionOn));
+    })();
+  </script>
+</body>
+</html>
