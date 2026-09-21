@@ -2,9 +2,11 @@
 
 Un jardín de flores amarillas, hecho con amor para una persona especial.
 
-Cada toque hace crecer un girasol: primero el tallo, después el centro y luego ocho pétalos. Al completar cada girasol, este se acomoda en una letra hasta formar **Angiee** con 89 flores. El nombre permanece completo dentro del mismo paisaje, tanto en móvil como en PC, y las flores siguen meciéndose con la brisa.
+**Un toque hace crecer un girasol completo**, animado en secuencia: tallo, centro café y ocho pétalos. **40 girasoles (40 toques)** forman el nombre **Angiee**. También puedes usar **Deja que florezca** para completar el nombre automáticamente.
 
-Puedes crear cada parte a mano o usar **Deja que florezca** para completar el nombre automáticamente. El crecimiento puede pausarse, y se detiene al terminar la dedicatoria. El botón de reinicio permite comenzar de nuevo.
+Cuando el nombre termina, cada toque sigue creando un girasol en el fondo del campo. Las letras permanecen en primer plano, sin moverse ni quedar tapadas. **Más flores para ti** añade ocho girasoles al fondo de forma automática; puedes pausar la creación en cualquier momento y la flor en curso termina de crecer.
+
+El jardín se adapta a móvil y PC sin desplazamiento lateral. Incluye reinicio, pausa de la brisa, teclado (Enter o espacio) y respeto a la preferencia de movimiento reducido. Funciona sin instalación ni dependencias externas.
 
 ## Ver el jardín
 
@@ -12,8 +14,8 @@ Puedes crear cada parte a mano o usar **Deja que florezca** para completar el no
 
 ## Archivos
 
-- `index.html`: página de inicio publicada en GitHub Pages.
-- `flores.html`: copia del HTML original, que también puede abrirse directamente en el navegador.
-- `.nojekyll`: permite publicar los archivos estáticos directamente.
+- index.html: página de inicio publicada en GitHub Pages.
+- flores.html: copia del HTML original, que también puede abrirse directamente en el navegador.
+- .nojekyll: permite publicar los archivos estáticos directamente.
 
-Funciona en móvil y PC, sin instalación ni dependencias externas. Para actualizar la dedicatoria o el jardín, mantén el mismo contenido en ambos archivos HTML y sube los cambios a `main`.
+Para actualizar la dedicatoria o el jardín, mantén el mismo contenido en ambos archivos HTML y sube los cambios a main.

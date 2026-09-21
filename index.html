@@ -41,22 +41,22 @@
     .corner-botanical.left { left:-24px; }
     .corner-botanical.right { right:-35px; transform:scaleX(-1); animation-name:grass-sway-right; opacity:.4; }
     .garden { position:absolute; inset:0; border-radius:inherit; overflow:clip; cursor:pointer; touch-action:pan-y pinch-zoom; user-select:none; }
-    .garden[aria-disabled="true"] { cursor:default; }
-    .plot { position:relative; width:100%; height:100%; pointer-events:none; }
+    .field-plot { position:absolute; inset:0; z-index:0; pointer-events:none; opacity:.72; }
+    .plot { position:relative; z-index:1; width:100%; height:100%; pointer-events:none; }
     .plant { position:absolute; bottom:6.5%; transform:translateX(-50%); pointer-events:none; }
     .plant.settled { transition:left .7s cubic-bezier(.22,.61,.36,1),bottom .7s cubic-bezier(.22,.61,.36,1),width .7s ease,height .7s ease; }
-    .plant.settled .stem { opacity:.22; transition:opacity .6s; }
+    .plant.settled .stem { opacity:.1; transition:opacity .6s; }
     .plant.settled .plant-shadow { display:none; }
     .plant.settled .sway { transform-origin:50% 28%; }
     .plant.settled .flower-head { filter:none; }
     .plant-shadow { position:absolute; bottom:-1%; left:26%; width:52%; height:12px; border-radius:50%; background:#465b4236; filter:blur(5px); animation:shadow-arrive 1s ease-out both; }
     .sway { height:100%; transform-origin:50% 97%; animation:sway var(--sway-duration,5s) ease-in-out infinite alternate; animation-delay:var(--sway-delay,0s); will-change:transform; }
     .flower-svg { display:block; width:100%; height:100%; overflow:visible; }
-    .stem-line { stroke-dasharray:1; stroke-dashoffset:1; animation:stem-grow .85s cubic-bezier(.22,.61,.36,1) forwards; }
-    .stem-leaf { transform-box:fill-box; transform-origin:bottom right; animation:leaf-grow .75s .24s cubic-bezier(.2,.8,.3,1.2) both; }
-    .stem-leaf.right { transform-origin:bottom left; animation-delay:.38s; }
-    .center-grow, .petal-grow { transform-origin:140px 119px; animation:bloom .62s cubic-bezier(.2,.8,.2,1.25) both; }
-    .petal-grow { animation-duration:.7s; }
+    .stem-line { stroke-dasharray:1; stroke-dashoffset:1; animation:stem-grow .45s cubic-bezier(.22,.61,.36,1) forwards; }
+    .stem-leaf { transform-box:fill-box; transform-origin:bottom right; animation:leaf-grow .4s .12s cubic-bezier(.2,.8,.3,1.2) both; }
+    .stem-leaf.right { transform-origin:bottom left; animation-delay:.2s; }
+    .center-grow, .petal-grow { transform-origin:140px 119px; animation:bloom .35s cubic-bezier(.2,.8,.2,1.25) both; }
+    .petal-grow { animation-duration:.35s; }
     .flower-head { filter:drop-shadow(0 4px 3px #956b301b); }
     .scene-topline { position:absolute; top:24px; left:26px; right:20px; display:flex; justify-content:space-between; align-items:center; pointer-events:none; z-index:2; }
     .scene-caption { font-family:Georgia,serif; font-size:12px; font-style:italic; color:#727d61; }
@@ -163,7 +163,8 @@
           <svg class="corner-botanical right" viewBox="0 0 180 200" fill="none" stroke="#84996c" stroke-width="1.4"><path d="M68 206Q93 118 61 47M88 205Q110 115 137 89M44 206Q52 160 25 131"/><g fill="#8b9e72" stroke="none"><path d="M73 101Q37 96 41 72Q69 73 73 101M73 123Q101 98 98 78Q71 93 73 123M75 147Q44 147 40 123Q67 124 75 147M70 166Q99 153 100 130Q73 140 70 166M110 142Q107 108 124 99Q137 119 110 142M120 119Q140 123 150 104Q131 99 120 119M49 175Q22 174 15 151Q36 150 49 175"/></g></svg>
           <span class="firefly" style="left:18%;top:60%;animation-delay:-2s"></span><span class="firefly" style="left:39%;top:74%;animation-delay:-6s"></span><span class="firefly" style="left:68%;top:53%;animation-delay:-4s"></span><span class="firefly" style="left:84%;top:78%;animation-delay:-1s"></span>
         </div>
-        <div class="garden" id="garden" role="button" tabindex="0" aria-label="Plantar un girasol: haz clic para crear el tallo" aria-describedby="garden-help">
+        <div class="garden" id="garden" role="button" tabindex="0" aria-label="Haz clic para hacer crecer un girasol completo" aria-describedby="garden-help">
+          <div class="field-plot" id="field-plot" aria-hidden="true"></div>
           <div class="plot" id="plot" aria-hidden="true"></div>
         </div>
         <div class="scene-topline"><span class="scene-caption">Donde estés tú, florece todo.</span><button class="reset" id="reset" type="button" aria-label="Reiniciar el jardín" title="Reiniciar el jardín" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10a8 8 0 1 1 1 7M4 4v6h6"/></svg></button></div>
@@ -175,7 +176,7 @@
         <div class="step-subtitle" id="step-subtitle">Toca el jardín; sus flores guardan una sorpresa.</div>
         <button class="auto-bloom" id="auto-bloom" type="button" aria-pressed="false">Deja que florezca ♡</button>
       </div>
-      <p class="sr-only" id="garden-help">Haz clic o toca el jardín. Primer toque: tallo. Segundo: centro café. Los ocho siguientes añaden un pétalo cada uno. Cada girasol completo se acomoda para formar el nombre Angiee. El siguiente toque inicia otro girasol, hasta completar el nombre. El botón Deja que florezca permite completar la dedicatoria automáticamente; puedes pausarlo en cualquier momento. También puedes usar Enter o la barra espaciadora con el jardín seleccionado.</p>
+      <p class="sr-only" id="garden-help">Cada clic o toque hace crecer un girasol completo, animado en secuencia: tallo, centro café y ocho pétalos. Cuarenta girasoles forman Angiee. Después puedes seguir plantando girasoles detrás, en el campo. Deja que florezca completa el nombre automáticamente y Más flores para ti añade ocho girasoles al fondo. Puedes pausar la creación automática; la flor en curso termina de crecer. También puedes usar Enter o la barra espaciadora con el jardín seleccionado.</p>
       <p class="sr-only" id="announcement" role="status" aria-live="polite" aria-atomic="true"></p>
     </main>
     <footer><span class="footer-note">Con amor, de mí para ti, te amo mucho mi Angiee. <span class="heart">♡</span></span></footer>
@@ -184,12 +185,13 @@
     (() => {
       'use strict';
       const $ = id => document.getElementById(id);
-      const garden = $('garden'), plot = $('plot');
+      const garden = $('garden'), plot = $('plot'), fieldPlot = $('field-plot');
       const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
       const flowers = [];
-      let active = null, completed = 0, serial = 0, motionOn = !motionPreference.matches;
+      let active = null, completed = 0, nameCompleted = 0, serial = 0, motionOn = !motionPreference.matches;
       let pointerStart = null, dragged = false;
-      let autoOn = false, autoTimer = null;
+      let autoOn = false, autoTimer = null, autoGoal = 0;
+      const bloomTimers = new Set();
       const ns = 'http://www.w3.org/2000/svg';
       const svgElement = (tag, attrs = {}) => {
         const element = document.createElementNS(ns, tag);
@@ -208,32 +210,20 @@
       $('breeze').addEventListener('click', () => setMotion(!motionOn));
       motionPreference.addEventListener('change', event => setMotion(!event.matches));
 
-      // Single-stroke letter shapes; flower centers trace the actual name.
-      // The paths are measured only, never painted as a text overlay.
+      // Forty carefully placed flowers keep every letter readable.
+      // The name itself is drawn only by the sunflower heads.
       const letterShapes = [
-        { letter:'A', paths:['M5 110L35 18L66 110', 'M16 77H55'] },
-        { letter:'n', paths:['M87 110V55', 'M87 74C95 43 136 42 136 75V110'] },
-        { letter:'g', paths:['M207 61C183 37 158 54 158 80C158 108 189 119 207 95', 'M210 54V125C210 159 168 165 159 142'] },
-        { letter:'i', paths:['M239 57V110'], dot:[239,29] },
-        { letter:'e', paths:['M267 80H318C320 43 268 42 266 78C264 111 296 123 318 102'] },
-        { letter:'e', paths:['M345 80H396C398 43 346 42 344 78C342 111 374 123 396 102'] }
+        { letter:'A', points:[[5,110],[15,77],[25,46],[35,18],[46,49],[56,80],[66,110],[36,77]] },
+        { letter:'n', points:[[87,110],[87,82],[87,55],[112,50],[136,75],[136,110]] },
+        { letter:'g', points:[[207,60],[181,50],[158,75],[175,104],[207,96],[210,126],[191,151],[163,140]] },
+        { letter:'i', points:[[239,22],[239,60],[239,86],[239,110]] },
+        { letter:'e', points:[[267,80],[293,80],[318,80],[309,55],[280,54],[268,107],[295,116]] },
+        { letter:'e', points:[[345,80],[371,80],[396,80],[387,55],[358,54],[346,107],[373,116]] }
       ];
-      const namePoints = [];
-      const pointSpacing = 14;
-      letterShapes.forEach((shape, letterIndex) => {
-        const addPoint = point => {
-          if (namePoints.some(other => other.letterIndex === letterIndex
-            && Math.hypot(other.x - point.x, other.y - point.y) < pointSpacing * .58)) return;
-          namePoints.push({ x:point.x, y:point.y, letter:shape.letter, letterIndex });
-        };
-        shape.paths.forEach(d => {
-          const path = svgElement('path', { d });
-          const length = path.getTotalLength();
-          const segments = Math.max(1, Math.ceil(length / pointSpacing));
-          for (let i = 0; i <= segments; i++) addPoint(path.getPointAtLength(length * i / segments));
-        });
-        if (shape.dot) addPoint({ x:shape.dot[0], y:shape.dot[1] });
-      });
+      const pointSpacing = 28;
+      const namePoints = letterShapes.flatMap((shape, letterIndex) =>
+        shape.points.map(([x, y]) => ({ x:x + letterIndex * 8, y, letter:shape.letter, letterIndex }))
+      );
       const nameBounds = {
         left:Math.min(...namePoints.map(point => point.x)),
         right:Math.max(...namePoints.map(point => point.x)),
@@ -242,6 +232,16 @@
       };
       garden.dataset.flowerTarget = String(namePoints.length);
       garden.dataset.completed = '0';
+
+      function fieldPosition(index) {
+        let value = index + 1, fraction = .5, position = 0;
+        while (value > 0) {
+          position += (value % 2) * fraction;
+          value = Math.floor(value / 2);
+          fraction *= .5;
+        }
+        return position;
+      }
 
       function layoutFlowers() {
         const width = garden.clientWidth, height = garden.clientHeight;
@@ -256,19 +256,31 @@
         const nameHeight = (nameBounds.bottom - nameBounds.top) * scale;
         const left = (width - nameWidth) / 2;
         const top = height * .17 + (height * .49 - nameHeight) * .38;
-        const diameter = pointSpacing * scale * .94;
+        const diameter = pointSpacing * scale * .88;
+        const fieldCount = Math.max(0, flowers.length - namePoints.length);
+        const fieldDensity = Math.min(1, Math.sqrt(16 / Math.max(1, fieldCount)));
 
         flowers.forEach((flower, index) => {
-          const settled = flower.step === 10;
+          const inField = flower.kind === 'field';
+          const settled = !inField && flower.complete;
           const point = namePoints[index];
           let x, headY, plantHeight, bloomScale;
-          if (settled) {
+          if (inField) {
+            const fieldIndex = index - namePoints.length;
+            const depth = (fieldIndex * .61803398875) % 1;
+            x = width * (.09 + fieldPosition(fieldIndex) * .82);
+            headY = height * (.70 + depth * .12);
+            const groundY = height * (.91 + depth * .035);
+            plantHeight = (groundY - headY) / (1 - 119 / 430);
+            const fieldDiameter = Math.min(compact ? 28 : 44, height * .1) * (.8 + depth * .2) * fieldDensity;
+            bloomScale = fieldDiameter / (plantHeight * 192 / 430);
+          } else if (settled) {
             x = left + (point.x - nameBounds.left) * scale;
             headY = top + (point.y - nameBounds.top) * scale;
             plantHeight = diameter * 430 / 192;
             bloomScale = 1;
           } else {
-            x = width / 2;
+            x = width * (.5 + [0, -.17, .17][index % 3]);
             headY = height * .79;
             plantHeight = height * .17 / (1 - 119 / 430);
             const growingDiameter = Math.min(compact ? 82 : 100, height * .21);
@@ -281,18 +293,22 @@
           flower.element.style.bottom = (height - headY - plantHeight * (1 - 119 / 430)) + 'px';
           flower.element.style.height = plantHeight + 'px';
           flower.element.style.width = plantHeight * 280 / 430 + 'px';
-          flower.element.style.zIndex = settled ? String(index + 1) : String(namePoints.length + 1);
+          flower.element.style.zIndex = inField ? String(Math.round(headY))
+            : settled ? String(index + 1) : String(namePoints.length + 1);
           flower.element.querySelector('.flower-head').setAttribute('transform',
             'translate(140 119) scale(' + bloomScale.toFixed(4) + ') translate(-140 -119)');
         });
       }
 
       function createFlower() {
-        if (flowers.length >= namePoints.length) return null;
         const id = 'flower-' + (++serial);
         const element = document.createElement('div'); element.className = 'plant';
-        element.dataset.letter = namePoints[flowers.length].letter;
-        element.dataset.letterIndex = String(namePoints[flowers.length].letterIndex);
+        const kind = flowers.length < namePoints.length ? 'name' : 'field';
+        element.dataset.kind = kind;
+        if (kind === 'name') {
+          element.dataset.letter = namePoints[flowers.length].letter;
+          element.dataset.letterIndex = String(namePoints[flowers.length].letterIndex);
+        }
         element.style.setProperty('--sway-duration', (4.3 + (serial % 5) * .6) + 's');
         element.style.setProperty('--sway-delay', (-serial * 1.17) + 's');
         element.innerHTML = `<div class="plant-shadow"></div><div class="sway"><svg class="flower-svg" viewBox="0 0 280 430" aria-hidden="true">
@@ -307,8 +323,8 @@
             <g class="stem-leaf right"><path d="M143 255C139 218 173 196 197 199C199 228 178 255 143 255Z" fill="url(#${id}-leaf)"/><path d="M144 254Q165 223 190 205M162 232l2-18M162 232l19-3" stroke="#c2cc8970" stroke-width="1.2" fill="none"/></g>
           </g><g class="flower-head"><g class="petals"></g><g class="disk"></g></g>
         </svg></div>`;
-        plot.append(element);
-        const flower = { id, element, step:1, petals:element.querySelector('.petals'), disk:element.querySelector('.disk'), x:0 };
+        (kind === 'name' ? plot : fieldPlot).append(element);
+        const flower = { id, element, kind, step:1, complete:false, petals:element.querySelector('.petals'), disk:element.querySelector('.disk'), x:0 };
         flowers.push(flower); active = flower;
         layoutFlowers();
         return flower;
@@ -337,15 +353,6 @@
         rotation.append(grow); flower.petals.append(rotation);
       }
 
-      const petalMessages = [
-        'Me gusta la vida un poquito más cuando estás tú.',
-        'Tienes esa forma tan tuya de iluminar mis días.',
-        'Si pudiera regalarte un paisaje, se parecería a este.',
-        'Qué bonito coincidir contigo.',
-        'Hay mil flores, pero mi persona favorita eres tú.',
-        'Ojalá estas flores te abracen un poquito por mí.',
-        'Yo seguiría eligiéndote, pétalo a pétalo.'
-      ];
       const bloomMessages = [
         'Mis flores amarillas siempre serán para ti.',
         'Que nunca te falten flores, ni motivos para sonreír.',
@@ -356,59 +363,44 @@
       ];
 
       function updateInterface() {
-        const step = active ? active.step : 0;
-        const petals = Math.max(0, step - 2);
-        const finished = completed === namePoints.length;
+        const finished = nameCompleted >= namePoints.length;
         const title = $('step-title'), subtitle = $('step-subtitle');
         let next;
         if (finished) {
           title.textContent = 'Angiee, hasta mis flores saben tu nombre. Te amo. ♡';
-          subtitle.textContent = 'Cada pétalo, cada flor y todo mi cariño… son para ti.';
-          next = 'Angiee, escrito con girasoles. La dedicatoria está completa.';
+          subtitle.textContent = autoOn ? 'El jardín sigue floreciendo para ti. Puedes pausar cuando quieras.'
+            : 'Tu nombre ya floreció. Sigue tocando para llenar de girasoles el campo.';
+          next = 'Angiee está completo. Hacer crecer otro girasol en el fondo del campo';
         } else if (autoOn) {
           title.textContent = 'Mira cómo mi jardín aprende tu nombre…';
           subtitle.textContent = 'Puedes pausar y continuar cuando quieras.';
-          next = 'Pausar el crecimiento automático y añadir una parte al girasol';
-        } else if (!step) {
+          next = 'Pausar la creación automática y hacer crecer un girasol';
+        } else if (!flowers.length) {
           title.textContent = 'No quería que te quedaras sin tus flores amarillas.';
-          subtitle.textContent = 'Toca el jardín; sus flores guardan una sorpresa.';
-          next = 'Plantar un girasol: haz clic para crear el tallo';
-        } else if (step === 1) {
-          title.textContent = 'Todo lo bonito empieza con un poquito de cariño.';
-          subtitle.textContent = 'Un toque más, y este girasol tendrá su corazón.';
-          next = 'Añadir el centro café al girasol';
-        } else if (step === 2) {
-          title.textContent = 'Este también late un poquito por ti.';
-          subtitle.textContent = 'Sigue tocando; te espera un pétalo en cada toque.';
-          next = 'Añadir el pétalo 1 de 8';
-        } else if (step < 10) {
-          title.textContent = petalMessages[petals - 1];
-          subtitle.textContent = 'Un pétalo más, un poquito más de amor.';
-          next = 'Añadir el pétalo ' + (petals + 1) + ' de 8';
+          subtitle.textContent = 'Un toque, un girasol. Hay una sorpresa esperando por ti.';
+          next = 'Haz clic para hacer crecer un girasol completo';
         } else {
-          title.textContent = bloomMessages[(completed - 1) % bloomMessages.length];
-          subtitle.textContent = 'Una flor más cerca de la sorpresa. Toca para seguir.';
-          next = 'Girasol completo. Crear el tallo de un nuevo girasol';
+          title.textContent = bloomMessages[(flowers.length - 1) % bloomMessages.length];
+          subtitle.textContent = 'Un toque, un girasol. Cada flor nos acerca a la sorpresa.';
+          next = 'Hacer crecer otro girasol completo para formar Angiee';
         }
         garden.setAttribute('aria-label', next);
-        garden.setAttribute('aria-disabled', String(finished));
+        garden.setAttribute('aria-disabled', 'false');
         garden.dataset.completed = String(completed);
+        garden.dataset.nameCompleted = String(nameCompleted);
         garden.dataset.complete = String(finished);
+        garden.dataset.fieldCompleted = String(completed - nameCompleted);
         $('reset').disabled = !flowers.length;
         $('invitation').classList.toggle('hidden', !!flowers.length);
         $('scene-hint').textContent = finished ? 'Mi flor favorita siempre serás tú. ♡'
-          : step ? 'Cada flor tiene un lugar en esta dedicatoria.' : 'Este jardín es solo para ti.';
+          : flowers.length ? 'Cada flor tiene un lugar en esta dedicatoria.' : 'Este jardín es solo para ti.';
         const autoButton = $('auto-bloom');
-        autoButton.disabled = finished;
+        autoButton.disabled = false;
         autoButton.setAttribute('aria-pressed', String(autoOn));
-        autoButton.textContent = finished ? 'Tu nombre ya floreció ♡'
-          : autoOn ? 'Pausar un momentito' : completed || step ? 'Deja que siga floreciendo ♡' : 'Deja que florezca ♡';
-        // Automatic growth keeps one quiet message instead of announcing every petal.
-        const letterFinished = step === 10 && completed > 0
-          && namePoints[completed - 1].letterIndex !== namePoints[completed]?.letterIndex;
-        if (!autoOn || letterFinished || finished) {
-          $('announcement').textContent = title.textContent + ' ' + next;
-        }
+        autoButton.textContent = autoOn ? 'Pausar un momentito'
+          : finished ? 'Más flores para ti ♡' : flowers.length ? 'Deja que siga floreciendo ♡' : 'Deja que florezca ♡';
+        const announcement = title.textContent + ' ' + next;
+        if ($('announcement').textContent !== announcement) $('announcement').textContent = announcement;
       }
 
       function clearAutoTimer() {
@@ -418,22 +410,63 @@
 
       function scheduleAuto() {
         clearAutoTimer();
-        if (!autoOn || document.hidden || completed === namePoints.length) return;
+        if (!autoOn || document.hidden) return;
+        if (completed >= autoGoal) {
+          autoOn = false;
+          updateInterface();
+          return;
+        }
+        // Let the current flowers finish; never drop or overwrite a fast tap.
+        if (flowers.length >= autoGoal || flowers.some(flower => !flower.complete)) return;
         autoTimer = setTimeout(() => {
           autoTimer = null;
-          grow(undefined, true);
-          scheduleAuto();
-        }, active && active.step === 10 ? 180 : 65);
+          if (autoOn && !document.hidden) grow(undefined, true);
+        }, 120);
       }
 
       function setAuto(enabled) {
-        autoOn = enabled && completed < namePoints.length;
+        autoOn = enabled;
+        if (enabled) autoGoal = nameCompleted < namePoints.length
+          ? Math.max(namePoints.length, flowers.length) : flowers.length + 8;
         clearAutoTimer();
         updateInterface();
         if (autoOn) scheduleAuto();
       }
 
       $('auto-bloom').addEventListener('click', () => setAuto(!autoOn));
+
+      function finishFlower(flower) {
+        if (flower.complete) return;
+        flower.step = 10;
+        flower.complete = true;
+        completed++;
+        if (flower.kind === 'name') nameCompleted++;
+        layoutFlowers();
+        updateInterface();
+        if (autoOn) scheduleAuto();
+      }
+
+      function laterInBloom(callback, delay) {
+        const timer = setTimeout(() => {
+          bloomTimers.delete(timer);
+          callback();
+        }, delay);
+        bloomTimers.add(timer);
+      }
+
+      function animateFlower(flower) {
+        if (motionPreference.matches) {
+          addCenter(flower);
+          for (let i = 0; i < 8; i++) addPetal(flower, i);
+          finishFlower(flower);
+          return;
+        }
+        laterInBloom(() => { flower.step = 2; addCenter(flower); }, 180);
+        for (let i = 0; i < 8; i++) {
+          laterInBloom(() => { flower.step = i + 3; addPetal(flower, i); }, 260 + i * 55);
+        }
+        laterInBloom(() => finishFlower(flower), 1000);
+      }
 
       function sparkle(event) {
         if (!motionOn || motionPreference.matches || !active) return;
@@ -451,24 +484,11 @@
       }
 
       function grow(event, automatic = false) {
-        if (completed === namePoints.length) return;
         if (!automatic && autoOn) { autoOn = false; clearAutoTimer(); }
-        if (!active || active.step === 10) createFlower();
-        else {
-          active.step++;
-          if (active.step === 2) addCenter(active);
-          else addPetal(active, active.step - 3);
-          if (active.step === 10) {
-            completed++;
-            layoutFlowers();
-            if (completed === namePoints.length) {
-              autoOn = false;
-              clearAutoTimer();
-            }
-          }
-        }
+        const flower = createFlower();
         if (!automatic) sparkle(event);
         updateInterface();
+        animateFlower(flower);
       }
       garden.addEventListener('pointerdown', event => { pointerStart = { x:event.clientX, y:event.clientY }; dragged = false; });
       garden.addEventListener('pointermove', event => { if (pointerStart && Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y) > 12) dragged = true; });
@@ -480,8 +500,10 @@
       });
       $('reset').addEventListener('click', () => {
         autoOn = false; clearAutoTimer();
+        bloomTimers.forEach(timer => clearTimeout(timer)); bloomTimers.clear();
         pointerStart = null; dragged = false;
-        plot.replaceChildren(); flowers.length = 0; active = null; completed = 0;
+        plot.replaceChildren(); fieldPlot.replaceChildren();
+        flowers.length = 0; active = null; completed = 0; nameCompleted = 0; autoGoal = 0;
         document.querySelectorAll('.spark').forEach(spark => spark.remove());
         updateInterface(); garden.focus({ preventScroll:true });
       });
